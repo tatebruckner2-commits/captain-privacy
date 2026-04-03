@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["DM3M33UV89.com.tatebruckner.teammanagementapp"],
+        "components": [
+          {
+            "/": "/reset-password",
+            "comment": "Password reset universal link"
+          }
+        ]
+      }
+    ]
+  }
+}
