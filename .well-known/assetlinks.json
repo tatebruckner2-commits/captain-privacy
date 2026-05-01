@@ -2,9 +2,10 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.tatebruckner.teammanagementapp",
+    "package_name": "com.captainteammanagement.app",
     "sha256_cert_fingerprints": [
-      "11:97:07:C5:DA:D0:0D:85:06:36:F6:69:B2:3D:43:41:BC:1F:D5:F0:0D:A4:E2:7E:41:AA:57:3D:1D:45:FA:A4"
+      "11:97:07:C5:DA:D0:0D:85:06:36:F6:69:B2:3D:43:41:BC:1F:D5:F0:0D:A4:E2:7E:41:AA:57:3D:1D:45:FA:A4",
+      "22:29:F3:2D:65:82:8C:8D:F9:F7:AD:1F:7B:02:02:9B:E4:D2:A6:C7:A4:5C:FC:BA:A5:D4:FE:FB:42:69:57:BF"
     ]
   }
 }]
