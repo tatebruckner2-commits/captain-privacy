@@ -107,7 +107,7 @@
 
     <a id="openBtn" class="btn" href="#">Open Captain</a>
     <a class="btn-secondary" href="https://apps.apple.com/app/id[YOUR_APP_STORE_ID]">Download on the App Store</a>
-    <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.tatebruckner.teammanagementapp">Get it on Google Play</a>
+    <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.captainteammanagement.app">Get it on Google Play</a>
 
     <p class="footer">
       Captain Team Management LLC<br />
@@ -117,10 +117,35 @@
 
   <script>
     (function () {
-      // Build the deep link from the current URL's query + hash
-      var deepLink = "teammanagement:///reset-password" + window.location.search + window.location.hash;
+      // Auth tokens (access_token / refresh_token) live in the URL hash because
+      // Supabase uses the implicit flow. We deliberately DO NOT forward the hash
+      // to the app — the access_token would otherwise sit in the deep-link URL.
+      // Instead we only forward the nonce (a single-use ID generated server-side
+      // by request-password-reset). The app validates the nonce against the
+      // backend and updates the password through complete-password-reset, which
+      // uses the service role server-side. Tokens never leave this browser tab.
+      var hash = window.location.hash || "";
+      var search = window.location.search || "";
+
+      // If Supabase returned an error in the hash, route the user to the
+      // in-app "link expired / invalid" screen instead of the password screen.
+      var isError = /(?:^|[#&?])error(?:_code|_description)?=/.test(hash);
+
+      var deepLink;
+      if (isError) {
+        deepLink = "teammanagement://reset-link-invalid";
+      } else {
+        // Pull only the nonce out of the query — discard everything else.
+        var nonceMatch = search.match(/[?&]nonce=([^&]+)/);
+        var nonce = nonceMatch ? nonceMatch[1] : "";
+        deepLink = nonce
+          ? "teammanagement://reset-password?nonce=" + encodeURIComponent(nonce)
+          : "teammanagement://reset-link-invalid";
+      }
+
       document.getElementById("openBtn").href = deepLink;
-      // Best-effort auto-open (works if app is already running)
+      // Best-effort auto-open (some iOS versions block JS-driven custom-scheme
+      // redirects without a user gesture; the button is the manual fallback).
       try { window.location.replace(deepLink); } catch (_) {}
     })();
   </script>
