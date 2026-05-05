@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Join a team on Captain</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #0A0A0B;
+      color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #16181C;
+      border: 1px solid #262A32;
+      border-radius: 24px;
+      padding: 44px 32px 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: #0057B8;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .icon-letter {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .app-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #C7CFDA;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #C7CFDA;
+      line-height: 1.55;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: block;
+      background: #0057B8;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { background: #004A9E; }
+    .btn-secondary {
+      display: block;
+      background: transparent;
+      color: #C7CFDA;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 14px;
+      border: 1px solid #262A32;
+      margin-bottom: 12px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #4B5565;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-wrap">
+      <span class="icon-letter">C</span>
+    </div>
+    <p class="app-name">Captain</p>
+    <h1>Join your team</h1>
+    <p class="subtitle">Open Captain on your phone to accept the invite. If you don't have the app yet, download it below.</p>
+
+    <a id="openBtn" class="btn" href="#">Open Captain</a>
+    <a class="btn-secondary" href="https://apps.apple.com/app/id[YOUR_APP_STORE_ID]">Download on the App Store</a>
+    <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.captainteammanagement.app">Get it on Google Play</a>
+
+    <p class="footer">
+      Captain Team Management LLC<br />
+      support@captainteammanagement.com
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      // Pull the invite token out of the query string and forward it to the
+      // app via the custom URL scheme. This page is the iOS fallback (AASA
+      // does not list /join, so iOS Safari loads this page and we redirect)
+      // and the Android no-app fallback (when App Links autoVerify failed
+      // or the app isn't installed yet).
+      var search = window.location.search || "";
+      var tokenMatch = search.match(/[?&]token=([^&]+)/);
+      var token = tokenMatch ? tokenMatch[1] : "";
+
+      var deepLink = token
+        ? "teammanagement://join?token=" + encodeURIComponent(decodeURIComponent(token))
+        : "teammanagement://join";
+
+      document.getElementById("openBtn").href = deepLink;
+      // Best-effort auto-open (some iOS versions block JS-driven custom-scheme
+      // redirects without a user gesture; the button is the manual fallback).
+      try { window.location.replace(deepLink); } catch (_) {}
+    })();
+  </script>
+</body>
+</html>
