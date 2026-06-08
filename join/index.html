@@ -106,7 +106,7 @@
     <p class="subtitle">Open Captain on your phone to accept the invite. If you don't have the app yet, download it below.</p>
 
     <a id="openBtn" class="btn" href="#">Open Captain</a>
-    <a class="btn-secondary" href="https://apps.apple.com/app/id[YOUR_APP_STORE_ID]">Download on the App Store</a>
+    <a class="btn-secondary" href="https://apps.apple.com/app/id6759206305">Download on the App Store</a>
     <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.captainteammanagement.app">Get it on Google Play</a>
 
     <p class="footer">
@@ -130,10 +130,12 @@
         ? "teammanagement://join?token=" + encodeURIComponent(decodeURIComponent(token))
         : "teammanagement://join";
 
+      // Wire the deep link to the "Open Captain" button only — a deliberate
+      // user tap. We intentionally do NOT auto-redirect on page load: firing
+      // a custom-scheme navigation when the app isn't installed makes iOS
+      // Safari throw "the address is invalid." Letting the user choose means
+      // people without the app simply see the download buttons, no error.
       document.getElementById("openBtn").href = deepLink;
-      // Best-effort auto-open (some iOS versions block JS-driven custom-scheme
-      // redirects without a user gesture; the button is the manual fallback).
-      try { window.location.replace(deepLink); } catch (_) {}
     })();
   </script>
 </body>
