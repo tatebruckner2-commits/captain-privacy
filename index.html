@@ -199,6 +199,20 @@
       .store-buttons { flex-direction: column; align-items: stretch; }
       .topbar .nav-cta { display: none; }
     }
+    @media (max-width: 600px) {
+      /* Mobile: stack value props into one left-aligned column so the
+         checkmarks line up vertically (the centered wrap looked ragged on
+         phones — some rows had 1 item, some 2). Block is centered via margin
+         auto. Desktop/tablet layout is untouched. */
+      .values-grid {
+        flex-direction: column;
+        align-items: flex-start;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 auto;
+        gap: 14px;
+      }
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       * { transition: none !important; }
