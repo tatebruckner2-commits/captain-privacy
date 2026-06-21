@@ -183,20 +183,21 @@
     </p>
   </footer>
 
-  <!-- Preserve incoming UTM params on store links. No third-party analytics. -->
+  <!-- Pass the landing page's query params (utm_source/medium/campaign/content,
+       and any others) through to the store buttons so GA4's outbound click
+       link_url carries them for attribution (Make can filter on utm_content).
+       Required store params (e.g. Google Play's id) are never overwritten;
+       with no query params the buttons are left untouched. -->
   <script>
     (function () {
       try {
-        var params = new URLSearchParams(window.location.search);
-        var utm = new URLSearchParams();
-        params.forEach(function (v, k) { if (/^utm_/i.test(k)) utm.append(k, v); });
-        if (Array.from(utm.keys()).length === 0) return;
-        var utmStr = utm.toString();
+        var incoming = new URLSearchParams(window.location.search);
+        if (Array.from(incoming.keys()).length === 0) return; // no params -> links unchanged
         document.querySelectorAll('a.store-link').forEach(function (a) {
           var url = new URL(a.href);
-          utm.forEach(function (v, k) { url.searchParams.set(k, v); });
-          // Google Play install referrer also reads the `referrer` param.
-          if (a.dataset.store === 'google') url.searchParams.set('referrer', utmStr);
+          incoming.forEach(function (value, key) {
+            if (!url.searchParams.has(key)) url.searchParams.set(key, value); // don't clobber store params like Play's id
+          });
           a.href = url.toString();
         });
       } catch (e) { /* never block the download links */ }
