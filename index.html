@@ -214,7 +214,12 @@
     @media (max-width: 460px) {
       .store-badge { min-width: 0; width: 100%; justify-content: center; }
       .store-buttons { flex-direction: column; align-items: stretch; }
-      .topbar .nav-cta { display: none; }
+      .nav-actions { gap: 10px; }
+      .topbar .nav-cta, .topbar .nav-cta-secondary { padding: 8px 14px; font-size: 13px; }
+      .topbar .nav-cta-secondary { padding: 7px 13px; }
+    }
+    @media (max-width: 360px) {
+      .brand-name { display: none; }
     }
     @media (max-width: 600px) {
       /* Mobile: stack value props into one left-aligned column so the
