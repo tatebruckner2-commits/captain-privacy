@@ -71,12 +71,20 @@
       background: #fff; display: block;
     }
     .brand-name { font-weight: 800; font-size: 17px; letter-spacing: -0.2px; }
+    .nav-actions { display: flex; align-items: center; gap: 24px; }
     .topbar .nav-cta {
       display: inline-block; text-decoration: none; font-weight: 700; font-size: 14px;
       color: #fff; background: var(--blue); padding: 9px 18px; border-radius: 10px;
       transition: background 0.15s ease;
     }
     .topbar .nav-cta:hover { background: var(--blue-dark); }
+    .topbar .nav-cta-secondary {
+      display: inline-block; text-decoration: none; font-weight: 700; font-size: 14px;
+      color: #fff; background: transparent; border: 1px solid var(--border-2);
+      padding: 8px 17px; border-radius: 10px;
+      transition: border-color 0.15s ease;
+    }
+    .topbar .nav-cta-secondary:hover { border-color: var(--muted-2); }
 
     /* ---------- Section scaffolding ---------- */
     section { padding: 88px 0; }
@@ -206,7 +214,7 @@
     @media (max-width: 460px) {
       .store-badge { min-width: 0; width: 100%; justify-content: center; }
       .store-buttons { flex-direction: column; align-items: stretch; }
-      .topbar .nav-cta { display: none; }
+      .nav-actions { display: none; }
     }
     @media (max-width: 600px) {
       /* Mobile: stack value props into one left-aligned column so the
@@ -236,7 +244,10 @@
         <img class="brand-mark" src="/icon.png" alt="Captain logo" />
         <span class="brand-name">Captain</span>
       </a>
-      <a class="nav-cta" href="/download">Download</a>
+      <div class="nav-actions">
+        <a class="nav-cta" href="/download">Download</a>
+        <a class="nav-cta-secondary" href="https://app.captainteammanagement.com">Log in</a>
+      </div>
     </div>
   </header>
 
