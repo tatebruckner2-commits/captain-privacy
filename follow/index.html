@@ -103,6 +103,7 @@
     <p class="subtitle">Open Captain on your phone to follow this team and see their games, scores, and updates. If you don't have the app yet, download it below.</p>
 
     <a id="openBtn" class="btn" href="#">Open Captain</a>
+    <a id="webBtn" class="btn-secondary" href="#">Continue on Web</a>
     <a class="btn-secondary" href="https://apps.apple.com/app/id6759206305">Download on the App Store</a>
     <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.captainteammanagement.app">Get it on Google Play</a>
 
@@ -133,6 +134,11 @@
       // Safari throw "the address is invalid." Letting the user choose means
       // people without the app simply see the download buttons, no error.
       document.getElementById("openBtn").href = deepLink;
+
+      var webUrl = token
+        ? "https://app.captainteammanagement.com/follow?token=" + encodeURIComponent(decodeURIComponent(token))
+        : "https://app.captainteammanagement.com/follow";
+      document.getElementById("webBtn").href = webUrl;
     })();
   </script>
 </body>
