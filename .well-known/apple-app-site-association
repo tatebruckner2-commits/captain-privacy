@@ -7,6 +7,14 @@
           {
             "/": "/reset-password",
             "comment": "Password reset universal link"
+          },
+          {
+            "/": "/join",
+            "comment": "Team invite universal link"
+          },
+          {
+            "/": "/follow",
+            "comment": "Fan follow universal link"
           }
         ]
       }
