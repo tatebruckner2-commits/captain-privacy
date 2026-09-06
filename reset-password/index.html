@@ -100,9 +100,10 @@
     <img class="icon-wrap" src="/icon.png" alt="Captain logo" />
     <p class="app-name">Captain</p>
     <h1>Reset your password</h1>
-    <p class="subtitle">Open Captain on your phone to set a new password. If you don't have the app yet, download it below.</p>
+    <p class="subtitle">Open Captain on your phone to set a new password, or continue in your browser. If you don't have the app yet, download it below.</p>
 
     <a id="openBtn" class="btn" href="#">Open Captain</a>
+    <a id="webBtn" class="btn-secondary" href="#">Continue in Browser</a>
     <a class="btn-secondary" href="https://apps.apple.com/app/id6759206305">Download on the App Store</a>
     <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.captainteammanagement.app">Get it on Google Play</a>
 
@@ -128,21 +129,26 @@
       // in-app "link expired / invalid" screen instead of the password screen.
       var isError = /(?:^|[#&?])error(?:_code|_description)?=/.test(hash);
 
+      // Pull only the nonce out of the query — discard everything else. Used
+      // by both the app deep link and the web option below; same nonce,
+      // same single-use/30-min-TTL server-side validation either way.
+      var nonceMatch = search.match(/[?&]nonce=([^&]+)/);
+      var nonce = nonceMatch ? nonceMatch[1] : "";
+
       var deepLink;
-      if (isError) {
+      var webLink;
+      if (isError || !nonce) {
         deepLink = "teammanagement://reset-link-invalid";
+        webLink = "https://app.captainteammanagement.com/reset-link-invalid";
       } else {
-        // Pull only the nonce out of the query — discard everything else.
-        var nonceMatch = search.match(/[?&]nonce=([^&]+)/);
-        var nonce = nonceMatch ? nonceMatch[1] : "";
-        deepLink = nonce
-          ? "teammanagement://reset-password?nonce=" + encodeURIComponent(nonce)
-          : "teammanagement://reset-link-invalid";
+        deepLink = "teammanagement://reset-password?nonce=" + encodeURIComponent(nonce);
+        webLink = "https://app.captainteammanagement.com/reset-password?nonce=" + encodeURIComponent(nonce);
       }
 
       document.getElementById("openBtn").href = deepLink;
+      document.getElementById("webBtn").href = webLink;
       // Best-effort auto-open (some iOS versions block JS-driven custom-scheme
-      // redirects without a user gesture; the button is the manual fallback).
+      // redirects without a user gesture; the buttons are the manual fallback).
       try { window.location.replace(deepLink); } catch (_) {}
     })();
   </script>
