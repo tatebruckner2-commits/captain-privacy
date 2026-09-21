@@ -155,6 +155,16 @@
     }
     .value-item span:last-child { font-size: 15px; font-weight: 600; color: var(--muted); }
 
+    /* ---------- Demo video ---------- */
+    .demo { text-align: center; padding-bottom: 0; }
+    .demo .lead { max-width: 46ch; margin: 16px auto 44px; text-wrap: balance; }
+    .demo-video {
+      display: block; width: 100%; max-width: 960px; height: auto; margin: 0 auto;
+      aspect-ratio: 16 / 9; background: #000;
+      border: 1px solid var(--border); border-radius: 20px;
+      box-shadow: 0 30px 80px -24px rgba(0,87,184,0.40);
+    }
+
     /* ---------- Problem / Solution split ---------- */
     .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
     .panel {
@@ -208,6 +218,8 @@
     @media (max-width: 860px) {
       section { padding: 64px 0; }
       .split { grid-template-columns: 1fr; gap: 22px; }
+      .demo .lead { margin-bottom: 30px; }
+      .demo-video { border-radius: 14px; }
       .features-grid { grid-template-columns: 1fr; }
       .final-card { padding: 48px 24px; }
     }
@@ -289,6 +301,21 @@
           <div class="value-item"><span class="check">✓</span><span>AI-assisted tools</span></div>
           <div class="value-item"><span class="check">✓</span><span>Built for coaches, parents, and teams</span></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== Demo video ===== -->
+    <section class="demo">
+      <div class="wrap">
+        <h2>See Captain in action</h2>
+        <p class="lead">Everything your team needs to stay organized, connected, and ready for what’s next.</p>
+        <!-- preload="metadata": the ~16 MB file only downloads when someone hits play (kind to mobile data).
+             playsinline: keeps iOS from forcing fullscreen on play. -->
+        <video class="demo-video" controls playsinline preload="metadata" width="1920" height="1080"
+               poster="/assets/captain-app-demo-poster.jpg" aria-label="Captain app demo video">
+          <source src="/assets/captain-app-demo.mp4" type="video/mp4" />
+          Your browser doesn’t support embedded video. <a href="/assets/captain-app-demo.mp4">Watch the Captain demo video</a>.
+        </video>
       </div>
     </section>
 
